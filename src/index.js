@@ -2,9 +2,10 @@
  * Created by rouven on 12.04.17.
  */
 
-import React from 'react'
-import ReactTooltip from 'react-tooltip'
-import uuid from 'uuid'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactTooltip from 'react-tooltip';
+import uuid from 'uuid';
 
 const withTooltip = (Tooltip) => (Component) => {
 
@@ -17,15 +18,25 @@ const withTooltip = (Tooltip) => (Component) => {
         'data-for': id
     };
 
-    console.log('add tooltip');
-
-    Tooltip = (
+    const TooltipComponent = (
         <ReactTooltip id={id}>
             {typeof Tooltip === 'function' ? <Tooltip/> : Tooltip}
         </ReactTooltip>
     );
 
-    return <span {...params}>{Component}{Tooltip}</span>;
+    return (
+        <span>
+             <span {...params}>
+                 {Component}
+             </span>
+            {
+                ReactDOM.createPortal(
+                    TooltipComponent,
+                    document.getElementsByTagName('body')[0]
+                )
+            }
+         </span>
+    );
 };
 
 export default withTooltip;
