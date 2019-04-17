@@ -14,15 +14,14 @@ module.exports = {
         umdNamedDefine: true
     },
     module: {
-        loaders: [
+        rules:  [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader'
+                use: 'babel-loader'
             }
         ]
     },
-    debug: true,
     devtool: 'source-map',
     externals: {
         "react": "react",
